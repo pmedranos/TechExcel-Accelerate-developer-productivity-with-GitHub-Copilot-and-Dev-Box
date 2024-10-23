@@ -1,5 +1,5 @@
 @description('Environment of the web app')
-param environment string = 'prod'  // Keep only the necessary parameters
+param environment string = 'test'  // Keep only the necessary parameters
 
 var webAppName = '${uniqueString(resourceGroup().id)}-${environment}'
 var appServicePlanName = '${uniqueString(resourceGroup().id)}-mpnp-asp'
