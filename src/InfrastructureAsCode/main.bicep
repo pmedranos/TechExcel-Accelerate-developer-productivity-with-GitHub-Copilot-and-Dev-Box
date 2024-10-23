@@ -1,8 +1,7 @@
 @description('Environment of the web app')
 param environment string = 'dev'
 
-@description('Location of services')
-param location string = 'eastus2'
+
 
 var webAppName = '${uniqueString(resourceGroup().id)}-${environment}'
 var appServicePlanName = '${uniqueString(resourceGroup().id)}-mpnp-asp'
@@ -17,7 +16,7 @@ var startupCommand = ''
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: logAnalyticsName
-  location: location
+  location: 'eastus2'
   properties: {
     sku: {
       name: 'PerGB2018'
@@ -31,7 +30,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02-preview' = {
   name: appInsightsName
-  location: location
+  location: 'eastus2'
   kind: 'web'
   properties: {
     Application_Type: 'web'
@@ -41,7 +40,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02-preview' = {
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2020-11-01-preview' = {
   name: registryName
-  location: location
+  location: 'eastus2'
   sku: {
     name: registrySku
   }
@@ -52,7 +51,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2020-11-01-pr
 
 resource appServicePlan 'Microsoft.Web/serverFarms@2022-09-01' = {
   name: appServicePlanName
-  location: location
+  location: 'eastus2'
   kind: 'linux'
   properties: {
     reserved: true
@@ -64,7 +63,7 @@ resource appServicePlan 'Microsoft.Web/serverFarms@2022-09-01' = {
 
 resource appServiceApp 'Microsoft.Web/sites@2020-12-01' = {
   name: webAppName
-  location: location
+  location: 'eastus2'
   properties: {
     serverFarmId: appServicePlan.id
     httpsOnly: true
