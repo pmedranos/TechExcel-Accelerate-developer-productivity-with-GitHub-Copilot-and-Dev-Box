@@ -1,7 +1,5 @@
 @description('Environment of the web app')
-param environment string = 'dev'
-
-
+param environment string = 'dev'  // Keep only the necessary parameters
 
 var webAppName = '${uniqueString(resourceGroup().id)}-${environment}'
 var appServicePlanName = '${uniqueString(resourceGroup().id)}-mpnp-asp'
@@ -12,7 +10,6 @@ var registryName = '${uniqueString(resourceGroup().id)}mpnpreg'
 var registrySku = 'Standard'
 var imageName = 'techexcel/dotnetcoreapp'
 var startupCommand = ''
-
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: logAnalyticsName
@@ -94,12 +91,11 @@ resource appServiceApp 'Microsoft.Web/sites@2020-12-01' = {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appInsights.properties.InstrumentationKey
         }
-        ]
-      }
+      ]
     }
+  }
 }
 
 output application_name string = appServiceApp.name
 output application_url string = appServiceApp.properties.hostNames[0]
 output container_registry_name string = containerRegistry.name
-
